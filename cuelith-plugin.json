@@ -8,21 +8,56 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/Cuelith/plugin-template",
   "family": "function",
-  "engines": { "cuelith": "^0.1.0", "protocol": "^1.8.0" },
-  "runtime": { "type": "node", "entry": "dist/main.mjs" },
+  "engines": {
+    "cuelith": "^0.1.0",
+    "protocol": "^1.9.0"
+  },
+  "runtime": {
+    "type": "node",
+    "entry": "dist/main.mjs"
+  },
   "icon": "icon.svg",
-  "ui": { "entry": "dist/ui/index.html" },
+  "ui": {
+    "entry": "dist/ui/index.html"
+  },
   "permissions": ["storage"],
+  "resources": {
+    "memoryMB": {
+      "idle": 45,
+      "peak": 100
+    },
+    "cpuPercent": {
+      "idle": 0.5,
+      "peak": 10
+    }
+  },
   "dependencies": {},
   "extends": [],
   "provides": [],
   "contributes": {
-    "panels": [{ "id": "hello", "title": "cuelith.hello.panel", "placement": "side" }],
+    "panels": [
+      {
+        "id": "hello",
+        "title": "cuelith.hello.panel",
+        "placement": "side"
+      }
+    ],
     "commands": [
-      { "id": "greet", "title": "cuelith.hello.command.greet" },
-      { "id": "count", "title": "cuelith.hello.command.count" }
+      {
+        "id": "greet",
+        "title": "cuelith.hello.command.greet"
+      },
+      {
+        "id": "count",
+        "title": "cuelith.hello.command.count"
+      }
     ],
     "events": ["greeted"],
-    "locales": [{ "lang": "it", "file": "locales/it.json" }]
+    "locales": [
+      {
+        "lang": "it",
+        "file": "locales/it.json"
+      }
+    ]
   }
 }
