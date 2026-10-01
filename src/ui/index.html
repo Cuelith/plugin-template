@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ciao</title>
+    <!-- Colori, caratteri e classi comuni della postazione (serviti dal motore). -->
+    <link rel="stylesheet" href="/ui/cuelith-ui.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="cl-root">
+    <main class="hello">
+      <label class="hello-field">
+        <span id="name-label" class="cl-label"></span>
+        <input id="name" class="cl-input" autocomplete="off" />
+      </label>
+      <button id="greet" type="button" class="cl-btn cl-btn--cue"></button>
+      <p id="status" role="status"></p>
+    </main>
+    <script type="module" src="./panel.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+/* Stili del pannello. Colori e caratteri: variabili di /ui/cuelith-ui.css. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.hello {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.hello-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hello-field .cl-input {
+  width: 100%;
+  min-width: 0;
+}
+
+.hello .cl-btn {
+  align-self: flex-start;
+}
+
+#status {
+  margin: 0;
+  color: var(--cl-muted);
+  font-size: 13px;
+}

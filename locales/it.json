@@ -1,0 +1,12 @@
+{
+  "cuelith.hello.panel": "Ciao",
+  "cuelith.hello.command.greet": "Saluta",
+  "cuelith.hello.command.count": "Conta i saluti",
+  "cuelith.hello.name": "Nome",
+  "cuelith.hello.greet": "Saluta",
+  "cuelith.hello.itemTitle": "Saluto a {name}",
+  "cuelith.hello.greeting": "Ciao, {name}!",
+  "cuelith.hello.count": "Saluti inviati: {count}",
+  "cuelith.hello.error.nameMissing": "Scrivi un nome.",
+  "cuelith.hello.error.failed": "Il saluto non è partito: riprova tra un attimo."
+}

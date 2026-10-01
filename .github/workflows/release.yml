@@ -1,0 +1,47 @@
+name: Release
+
+# Un tag vX.Y.Z (solo su main) pubblica il pacchetto .cpkg nella release di
+# GitHub; impronta e dimensione vanno poi nel file del modulo nel registry.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: plugin-template
+      - uses: actions/checkout@v7
+        with:
+          repository: Cuelith/cuelith-sdk
+          # Le release si costruiscono con l'SDK pubblicato (main).
+          ref: main
+          path: cuelith-sdk
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: plugin-template/package.json
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: SDK
+        working-directory: cuelith-sdk
+        run: pnpm install --frozen-lockfile && pnpm build
+      - name: Pacchetto
+        working-directory: plugin-template
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm check
+          pnpm build | tee build.txt
+          # Nelle note della release solo nome, impronta e dimensione del pacchetto.
+          grep -E '^(dist/.+\.cpkg|sha256 |size )' build.txt > package.txt
+          test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - name: Release
+        working-directory: plugin-template
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.cpkg --title "$GITHUB_REF_NAME" --notes-file package.txt --repo "$GITHUB_REPOSITORY"
