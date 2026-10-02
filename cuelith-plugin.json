@@ -3,13 +3,13 @@
   "id": "cuelith.hello",
   "name": "Ciao",
   "description": "Modulo d'esempio: un pannello e un comando che gira nel suo processo. Punto di partenza per scrivere moduli.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "Cuelith",
   "license": "Apache-2.0",
   "repository": "https://github.com/Cuelith/plugin-template",
   "family": "function",
   "engines": {
-    "cuelith": "^0.1.0",
+    "cuelith": ">=0.1.0 <1.0.0",
     "protocol": "^1.9.0"
   },
   "runtime": {
