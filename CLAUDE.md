@@ -10,3 +10,4 @@ Modello per i moduli di Cuelith e modulo d'esempio **hello-panel** (`cuelith.hel
 - `pnpm check` prima di ogni commit; `pnpm build` crea `dist/` (installabile come cartella da Moduli → Installa da cartella…) e `dist/cuelith.hello-<versione>.cpkg`.
 - Lavoro su `dev`; `main` riceve solo release taggate (SemVer).
 - Rispondi al fondatore sempre in italiano.
+- **Licenza Apache 2.0, di proposito** (decisione 0012): chi parte da questo modello può dare al proprio plugin qualsiasi licenza. Non copiarvi codice di `cuelith-core` (GPL).
