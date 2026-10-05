@@ -12,7 +12,9 @@
     "lint": "eslint src test scripts",
     "test": "vitest run",
     "check": "pnpm typecheck && pnpm lint && pnpm test",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "keys": "node scripts/keys.mjs",
+    "sign": "node scripts/sign.mjs"
   },
   "dependencies": {
     "@cuelith/panel": "link:../cuelith-sdk/packages/panel",
