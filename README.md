@@ -15,7 +15,7 @@ Punto di partenza per scrivere un modulo di [Cuelith](https://github.com/Cuelith
 3. Scrivi i comandi in `src/main.ts` e il pannello in `src/ui/`. Un modulo senza codice (solo pannelli o dati) usa `"runtime": { "type": "none" }`.
 4. `pnpm install && pnpm build`, poi in Cuelith: **Moduli → Installati → Installa da cartella…** e scegli la cartella del modulo.
 
-L'SDK arriva da npm (`@cuelith/sdk`, `@cuelith/panel`, `@cuelith/ui`, `@cuelith/protocol`): `pnpm install` basta. Per provare il pacchetto: `pnpm build I repo `cuelith-sdk`e questo stanno affiancati nella stessa cartella: l'SDK arriva da`link:../cuelith-sdk/packages/_`.I repo `cuelith-sdk`e questo stanno affiancati nella stessa cartella: l'SDK arriva da`link:../cuelith-sdk/packages/_`. pnpm conformance`.
+L'SDK arriva da npm (`@cuelith/sdk`, `@cuelith/panel`, `@cuelith/ui`, `@cuelith/protocol`): `pnpm install` basta. Per provare il pacchetto: `pnpm build && pnpm conformance` (il programma di verifica si scarica dall'ultima release di `cuelith-core`, dalla 0.3.2 in poi).
 
 ## Permessi
 
