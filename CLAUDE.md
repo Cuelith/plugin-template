@@ -1,13 +1,32 @@
-# plugin-template
+# Instructions for the AI assistant (and for you)
 
-Modello per i moduli di Cuelith e modulo d'esempio **hello-panel** (`cuelith.hello`), richiesto dalla Fase 0 (cap. 28). Fonte di verità: il documento di progetto e le decisioni in `cuelith-docs` (in particolare 0007, processi dei moduli).
+This folder is a **plugin for Cuelith** (live projection software), started from the official template. If you are an AI assistant working here, follow these rules. If you are a person, they are a good checklist too. The full guide, with every known way to break a plugin, is the [Author guide](https://github.com/Cuelith/.github/blob/main/AUTHOR-GUIDE.md).
 
-- Modulo con codice (`runtime: node`, `dist/main.mjs`): il motore lo avvia in un processo separato col modello dei permessi di Node, gli parla con JSON-RPC su stdio e lo riavvia se cade (3 volte in 60 s). Deve rispondere entro 5 s.
-- `src/main.ts` usa `@cuelith/sdk` (`definePlugin`); Vite lo impacchetta in un solo file con l'SDK dentro, perché il processo può leggere solo la cartella del modulo.
-- `src/ui/` è il pannello (iframe isolato, `@cuelith/panel`): chiama i comandi del modulo con `plugin.command`. Nessun testo nel codice: chiavi `cuelith.hello.*` in `locales/it.json`; il test fallisce se ne manca una.
-- Permessi minimi: qui solo `storage`. Ogni permesso in più va motivato (vedi `PermissionSchema` in `@cuelith/protocol`).
-- L'SDK arriva da npm (`@cuelith/sdk`, `@cuelith/panel`, `@cuelith/protocol`; la CI fa lo stesso). Il nucleo usa questo repo nella prova e2e "le uscite non cadono".
-- `pnpm check` prima di ogni commit; `pnpm build` crea `dist/` (installabile come cartella da Moduli → Installa da cartella…) e `dist/cuelith.hello-<versione>.cpkg`.
-- Lavoro su `dev`; `main` riceve solo release taggate (SemVer).
-- Rispondi al fondatore sempre in italiano.
-- **Licenza Apache 2.0, di proposito** (decisione 0012): chi parte da questo modello può dare al proprio plugin qualsiasi licenza. Non copiarvi codice di `cuelith-core` (GPL).
+Talk to the user in the language they use. If a rule conflicts with what the user asks, tell them instead of breaking the rule.
+
+## Structure
+
+- `cuelith-plugin.json` is the manifest. `id` is a reverse-domain name in lowercase letters and digits (`yourname.something`); never use ids starting with `cuelith.`. Change `id`, `name`, `publisher`, `license`, `repository` first.
+- `version` is SemVer and must be the same in `cuelith-plugin.json`, `package.json` and the git tag. Raise it on every release.
+- `engines`: `{"cuelith": ">=0.3.0 <1.0.0", "protocol": "^1.9.0"}`. Never `^0.x` for `cuelith`, never `*`.
+- `src/main.ts` is the plugin's process (`@cuelith/sdk`, `definePlugin`). `src/ui/` is the panel. `locales/` has the texts.
+- `pnpm build` produces `dist/<id>-<version>.cpkg`. Never zip by hand.
+
+## Rules that keep it working
+
+- **Process**: bundled into one file (`dist/main.mjs`); it can read only its own folder, so no `node_modules` at run time. Answer every command in under 5 seconds; do slow work in the background. Never call `process.exit()`, never leave a server or timer running after deactivate, never throw an uncaught error. Data goes in `ctx.storage` (max 10 MB) or `ctx.dataDir`, nowhere else.
+- **Permissions**: declare only what the code uses (`storage`, `network`, `network:<host>`, `fs:read`, `fs:write`, `devices:*`, `serial`, `process`, `addons`, `native`). Prefer `network:<host>` over `network`. Without a permission the engine blocks the action.
+- **Panels** run isolated with a strict policy: everything must come from files inside the package. No CDN, no web fonts, no external images, no inline `<script>`, no `onclick=`, no `<form>` submission.
+- **Texts**: no visible text in code. Keys start with the plugin id, no hyphens, defined in `locales/<lang>.json`; every key used in the manifest must exist.
+- **Data from the engine**: never validate it with a strict schema. Read what you need, ignore the rest, treat unknown option values as "other".
+- **Do not** copy code from `cuelith-core`, import anything but `@cuelith/sdk`, `@cuelith/panel`, `@cuelith/ui`, `@cuelith/protocol`, put secrets in the package (`author.key`, tokens, `.env`), invent protocol methods or manifest fields (the types in `node_modules/@cuelith/protocol` are the truth), or name other products in descriptions. Name the plugin "Something for Cuelith", never "Cuelith Something".
+
+## Workflow
+
+After every change: `pnpm check && pnpm build && pnpm conformance`. The work is finished only when it prints `PASSED`. Never say a plugin is "safe" or "certified": passing is a technical test, not a guarantee.
+
+Work on `dev`; `main` receives only tagged releases.
+
+## Licence
+
+This template is Apache 2.0 on purpose: give your plugin any licence you like, keeping the Apache notices of what you copy. Do not copy code from `cuelith-core` (GPL).
