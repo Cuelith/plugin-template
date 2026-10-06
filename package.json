@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "keys": "node scripts/keys.mjs",
     "sign": "node scripts/sign.mjs",
-    "conformance": "node scripts/conformance.mjs"
+    "conformance": "node scripts/conformance.mjs",
+    "registry": "node scripts/registry-entry.mjs"
   },
   "dependencies": {
     "@cuelith/panel": "0.7.0",
