@@ -14,12 +14,13 @@
     "check": "pnpm typecheck && pnpm lint && pnpm test",
     "format": "prettier --write .",
     "keys": "node scripts/keys.mjs",
-    "sign": "node scripts/sign.mjs"
+    "sign": "node scripts/sign.mjs",
+    "conformance": "node scripts/conformance.mjs"
   },
   "dependencies": {
-    "@cuelith/panel": "link:../cuelith-sdk/packages/panel",
-    "@cuelith/protocol": "link:../cuelith-sdk/packages/protocol",
-    "@cuelith/sdk": "link:../cuelith-sdk/packages/sdk"
+    "@cuelith/panel": "0.7.0",
+    "@cuelith/protocol": "1.15.0",
+    "@cuelith/sdk": "0.7.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

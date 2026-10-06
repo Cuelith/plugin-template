@@ -1,0 +1,4 @@
+minimumReleaseAgeExclude:
+  - "@cuelith/panel@0.7.0"
+  - "@cuelith/protocol@1.15.0"
+  - "@cuelith/sdk@0.7.0"
