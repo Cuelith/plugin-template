@@ -2,6 +2,7 @@
 // l'icona plugins/<id>.svg, con impronta e dimensione del pacchetto gia' calcolate.
 //   pnpm registry                        crea dist/registry/<id>.json e <id>.svg (plugin nuovo)
 //   pnpm registry --add-to voce.json     aggiunge questa versione in cima a una voce esistente
+//   pnpm registry --support https://...  dove chiedere aiuto (pagina https o mailto:), mostrato nella scheda
 // Va eseguito dopo "pnpm build" e DOPO aver pubblicato la release su GitHub con lo stesso
 // pacchetto: l'indirizzo punta a quel file e non si deve piu' cambiare.
 import { createHash } from "node:crypto";
@@ -62,13 +63,22 @@ if (addTo === -1) {
   entry.versions = [version, ...entry.versions];
 }
 
-const checked = RegistryPluginSchema.safeParse(entry);
+const supportAt = process.argv.indexOf("--support");
+if (supportAt !== -1) {
+  const link = process.argv[supportAt + 1] ?? "";
+  if (!/^https:\/\/[^\s@]+$/i.test(link) && !/^mailto:[^\s@,;?]+@[^\s@,;?]+$/i.test(link)) {
+    fail("--support vuole una pagina https:// (senza utente@) o un mailto:indirizzo");
+  }
+}
+const { support: _ignored, ...forSchema } = entry;
+const checked = RegistryPluginSchema.safeParse(forSchema);
 if (!checked.success) {
   fail(
     `La voce non e' valida:\n${checked.error.issues.map((i) => `  ${i.path.join(".")}: ${i.message}`).join("\n")}`,
   );
 }
 
+if (supportAt !== -1) entry.support = process.argv[supportAt + 1];
 const out = join(root, "dist", "registry");
 mkdirSync(out, { recursive: true });
 writeFileSync(join(out, `${manifest.id}.json`), `${JSON.stringify(entry, null, 2)}\n`);
